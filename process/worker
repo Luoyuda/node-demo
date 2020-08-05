@@ -1,0 +1,10 @@
+#!/usr/bin/env node
+
+const http = require('http')
+const port = Math.round(8000 + Math.random() * 10)
+http.createServer((req, res) => {
+    res.setHeader('Content-Type', 'text/plain')
+    res.end('Hello World')
+}).listen(port, (err) => {
+    console.log(`http://localhost:${port}`)
+})

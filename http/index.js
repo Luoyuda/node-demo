@@ -2,22 +2,28 @@
  * @Author: xiaohuolong
  * @Date: 2020-07-27 23:32:51
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2020-07-29 09:44:18
+ * @LastEditTime: 2020-08-03 22:43:56
  * @FilePath: /node-demo/http/index.js
  */ 
 const http = require('http')
+const fs = require('fs')
 // http.createServer(requestListener?: RequestListener): Server
+const buffer = fs.readFileSync('./data.txt')
+const str = buffer.toString()
 // 创建一个服务
 const server = http.createServer((req, res) => {
     let path = req.url
-    console.log(req.url)
-    console.log(req.method)
-    console.log(req.httpVersion)
-    console.log(req.headers)
-    console.log(`http://localhost:8000${path}`)
+    // console.log(req.url)
+    // console.log(req.method)
+    // console.log(req.httpVersion)
+    // console.log(req.headers)
+    // console.log(`http://localhost:8001${path}`)
     // res.writeHead(200, { 'Content-Type': 'application/json'})
     res.setHeader('Content-Type', 'application/json')
-    res.end(JSON.stringify({path}))
+    // fs.readFile('./data.txt', (err, data) =>{
+    //     if(err) return err
+        res.end(str)
+    // })
 })
 server.on('connect', (req) => {
     // 当客户端发起 COMMIT 请求时触发此事件
@@ -50,7 +56,7 @@ server.on('clientError', (req) => {
 // http 客户端
 const req = http.request({
     hostname: '127.0.0.1',
-    port: 8000,
+    port: 8001,
     path: '/123321',
     method: 'GET',
 }, (res) => {
@@ -85,6 +91,6 @@ req.on('continue', (req) => {
 req.end()
 // server.listen(port?: number, hostname?: string, backlog?: number, listeningListener?: () => void): this
 // 服务监听在某个域名下的某个端口
-server.listen(8000, () => {
-    console.log(`http://localhost:8000/`)
+server.listen(8001, () => {
+    console.log(`http://localhost:8001/`)
 })
